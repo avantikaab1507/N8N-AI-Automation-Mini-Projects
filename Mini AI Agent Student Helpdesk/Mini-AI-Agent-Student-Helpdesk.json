@@ -1,0 +1,114 @@
+{
+  "name": "Mini AI Agent: Student Helpdesk",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "id": "b3028c3d-91e1-4e0e-92f2-7bf2b84e336d",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b56e2b66-462a-4e78-a7b9-acf5e6d10874",
+              "name": "question",
+              "value": "What time does the Python class start?",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [224, 0],
+      "id": "fc532080-91c9-4ebd-88ea-9df5a881dae3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.question }}",
+        "options": {
+          "systemMessage": "You are a Student Helpdesk Agent.\n\nAnswer student questions using ONLY the information below.\n\nStudent Helpdesk Information:\n\n- Python class starts at 10:00 AM.\n- Students must maintain at least 75% attendance.\n- For certificate-related issues, students should contact the Training Coordinator.\n\nRules:\n- Give clear and concise answers.\n- Do not invent or guess information.\n- If the requested information is not provided above, say:\n\"I'm sorry, I don't have that information. Please contact the Training Coordinator.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [448, 0],
+      "id": "65033dda-c969-4869-a7d2-2b7170eeb2f6",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [320, 208],
+      "id": "783f0360-9be3-4781-a8b7-99dd03fb46dd",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "85a501f9-f23a-44b4-8844-441a42e11adb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "YOUR INSTANCE ID"
+  },
+  "nodeGroups": [],
+  "id": "pWITEqa6hZEvZU8e",
+  "tags": []
+}

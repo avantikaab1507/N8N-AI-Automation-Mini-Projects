@@ -1,0 +1,113 @@
+{
+  "name": "AI Paragraph Summarizer",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "id": "fbcf6caa-fe86-40a0-ac30-f573572f961c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cb20d81f-8a3c-4a4c-970e-008f35391e32",
+              "name": "paragragh",
+              "value": "Artificial intelligence is transforming education by providing students with personalized learning experiences. AI-powered tools can analyze a student's learning patterns, identify areas where they need improvement, and recommend suitable study materials. Teachers can also use AI to automate repetitive tasks and spend more time interacting with students. However, responsible use of AI is important to protect student privacy and ensure that technology supports rather than replaces human teaching.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [224, 0],
+      "id": "1b6ad746-f608-4570-891f-7e609364d6ef",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Summarize the following paragraph into exactly 3 concise bullet points.\n\nRules:\n- Return exactly 3 bullet points.\n- Each bullet point should contain one important idea.\n- Do not add an introduction or conclusion.\n- Do not use numbering.\n- Keep the summary clear and concise.\n\nParagraph:\nSummarize the following paragraph into exactly 3 concise bullet points.\n\nRules:\n- Return exactly 3 bullet points.\n- Each bullet point should contain one important idea.\n- Do not add an introduction or conclusion.\n- Do not use numbering.\n- Keep the summary clear and concise.\n\nParagraph:\nSummarize the following paragraph into exactly 3 concise bullet points.\n\nRules:\n- Return exactly 3 bullet points.\n- Each bullet point should contain one important idea.\n- Do not add an introduction or conclusion.\n- Do not use numbering.\n- Keep the summary clear and concise.\n\nParagraph{{ $json.paragragh }}:\n{{ $json.paragraph }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [480, 0],
+      "id": "35ca3f8f-c8de-4ec4-9343-95af238f77bb",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [704, 176],
+      "id": "fe83273b-38db-4bd3-84a0-692773fa30d4",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e133620d-8ab2-4d8f-8a98-d7a1636fe449",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "Your Instance ID"
+  },
+  "nodeGroups": [],
+  "id": "3qeJfNN8BHf5HhCB",
+  "tags": []
+}

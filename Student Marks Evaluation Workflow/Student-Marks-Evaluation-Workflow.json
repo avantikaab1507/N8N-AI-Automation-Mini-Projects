@@ -1,0 +1,166 @@
+{
+  "name": "Student Marks Evaluation Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "id": "dcc2dc6c-7009-4a69-9ae2-451d7d3316ce",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8f9eebff-2b86-4b36-a351-a6026184f2bd",
+              "name": "studentName",
+              "value": "student1",
+              "type": "string"
+            },
+            {
+              "id": "a30abd68-080b-4678-92a2-593d4a42198f",
+              "name": "mark",
+              "value": 85,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [224, 0],
+      "id": "0813fbd9-c70d-4e13-a843-1a83ef8f9f44",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "281178a2-23c4-45af-961f-86a084b951b6",
+              "leftValue": "={{ $json.mark }}",
+              "rightValue": 40,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [448, 0],
+      "id": "247ccbf7-f6fb-4a2a-86f0-4457a29a8236",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2e78e5d6-c535-48e1-8d05-28f922e71efb",
+              "name": "result",
+              "value": "PASS",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [672, -96],
+      "id": "d1775e84-71da-46fb-ba64-41c38721d229",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3653806a-363f-4002-83cd-fb7ae238efbb",
+              "name": "result",
+              "value": "FAIL",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [672, 96],
+      "id": "0a3e33fb-be95-4155-bf19-110e137731ec",
+      "name": "Edit Fields2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b83a8525-0e3d-4597-a309-dcf963b58705",
+  "meta": {
+    "instanceId": "Your Instance ID"
+  },
+  "nodeGroups": [],
+  "id": "xmHpeBF14t4VUNBO",
+  "tags": []
+}
