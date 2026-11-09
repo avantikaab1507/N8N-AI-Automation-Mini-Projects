@@ -314,3 +314,9 @@ Possible future extensions for these workflows include:
 ## 📄 Note
 
 These projects were developed as hands-on learning exercises during Semester 5 RPA / Agentic AI PEP training to explore practical applications of n8n and AI-powered automation.
+
+---
+
+## 📌 Project Status
+
+Completed — all four workflows were configured, tested, and validated as part of Semester 5 RPA & Agentic AI training. The repository is maintained as a learning and demonstration portfolio of practical n8n and AI-powered automation workflows.
